@@ -1,0 +1,70 @@
+1.Total cases and deaths by year and country
+
+SELECT
+    country,
+    EXTRACT(YEAR FROM date) AS year,
+    SUM(total_cases) AS total_cases,
+    SUM(total_deaths) AS total_deaths
+FROM gold.fact_cases
+GROUP BY country, year
+ORDER BY country, year;
+
+
+
+
+
+2.Total hospital and ICU admissions by country
+
+SELECT
+    country,
+    SUM(value) AS total_admissions
+FROM silver.cleaned_hospital_admissions
+GROUP BY country;
+
+
+
+3.Monthly average testing data by country facing error()::
+
+SELECT 
+    country,
+    month,
+    AVG(testing_rate) AS avg_testing_rate
+FROM silver.cleaned_testing2
+WHERE testing_rate IS NOT NULL
+GROUP BY country, month
+ORDER BY country, month;
+ 
+
+4.Top 5 countries with the highest number of cases in 2020 ##THERE IS NO DATA FOR THE YEAR I 2021 SO WE ARE USING 2020 
+
+SELECT
+    country,
+    EXTRACT(YEAR FROM date) AS year,
+    SUM(total_cases) AS total_cases
+FROM gold.fact_cases
+GROUP BY country , year
+ORDER BY total_cases DESC
+LIMIT 5; 
+
+
+5.Year-wise cumulative deaths globally
+
+SELECT
+    EXTRACT(YEAR FROM date) AS year,
+    SUM(total_deaths) AS global_deaths
+FROM gold.fact_cases
+GROUP BY year
+ORDER BY year;
+
+
+
+6.Monthly hospital admissions trend for a given country
+
+SELECT
+    EXTRACT(YEAR FROM date) AS year,
+    EXTRACT(MONTH FROM date) AS month,
+    SUM(total_admissions) AS monthly_admissions
+FROM gold.fact_hospital_admissions
+WHERE country = 'Austria'  # adjust country name according to the country names given in the table bro
+GROUP BY year, month
+ORDER BY year, month;
