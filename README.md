@@ -1,5 +1,12 @@
 Install the packages required:
-pandas and sqlalchemy psycopg2-binary
+from the requirements.txt
+
+Database Setup:
+> 📌 Before running the code, install pgAdmin4 & PostgreSQL, then:
+> - Create a DB named `covid-20`
+> - Inside that DB, create schemas: `silver` and `gold`
+> - change the credentials in the create engine place in every level
+> - Then you're good to run the scripts
 
 
 step 1 : Bronze- level
